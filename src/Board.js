@@ -8,9 +8,10 @@ const socket = io(); // Connects to socket connection
 
 export function Board(props){
     
-    const [board, setBoard] = useState(Array(9).fill(null));
-    const [state1, setState1] = useState(1);
+    const [board, setBoard] = useState(Array(9).fill(null));    //fill the box with null
+    const [state1, setState1] = useState(1);                    //set state to X(starting point)
     
+    //on click handler for when a user clicks on a box
     function onClickHandler(n){
         let go;
         go = [...board]
@@ -34,12 +35,12 @@ export function Board(props){
     // (passed as the second arg to useEffect) changes. Since this array is empty
     // here, then the function will only run once at the very beginning of mounting.
     useEffect(() => {
-        // Listening for a chat event emitted by the server. If received, we
+        // Listening for a click event emitted by the server. If received, we
         // run the code in the function that is passed in as the second arg
         socket.on('click', (data) => {
         console.log('Click event received!');
         console.log(data);
-        // If the server sends a message (on behalf of another client), then we
+        // If the server sclick (on behalf of another client), then we
         // add it to the list of messages to render it on the UI.
         setBoard([...data.go]);
         if(data.setState1 === 0){

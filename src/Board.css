@@ -8,4 +8,7 @@
 
 .box {
   border: 1px solid black; /* Shows the lines in the CSS grid */
+  text-align: center;
+  padding: 30px 0;
+  font-size: 30px;
 }
