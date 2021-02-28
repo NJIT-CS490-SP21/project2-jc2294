@@ -15,7 +15,6 @@ export function Board({currentUser}){
     
     //all the users
     let [user, setUser] = useState({ "X": "", "O": "", "spectators": []})
-
     
     //on click handler for when a user clicks on a box
     function onClickHandler(n){
@@ -53,7 +52,35 @@ export function Board({currentUser}){
             
         }
  
-    }    
+    }  
+    
+    function calculateWinner(board) {
+        const lines = [     //all possible wns
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6],
+        ];
+        for (let i = 0; i < lines.length; i++) {
+            const [a, b, c] = lines[i];
+            if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+                return board[a];
+            }
+        }
+        return null;
+    }
+    
+    const winner = calculateWinner(board);
+    
+    let status;
+    if (winner) {
+        status = "Winner: " + winner;
+    }
+    
     
     // The function inside useEffect is only run whenever any variable in the array
     // (passed as the second arg to useEffect) changes. Since this array is empty
@@ -107,7 +134,7 @@ export function Board({currentUser}){
             <h3>Player X: { user["X"] }</h3>
             <h3>Player Y: { user["O"] }</h3>
             <h3>Spectators: { user["spectators"] }</h3>
-           
+            <p>{status}</p>
              <ul>
                 { user["spectators"].map(item => <ListItem name={item} />) }
             </ul>
