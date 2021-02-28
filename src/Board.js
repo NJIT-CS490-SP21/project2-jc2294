@@ -8,8 +8,8 @@ import { ListItem } from './ListItem.js';
 
 const socket = io(); // Connects to socket connection
 
-export function Board(props){
-    
+export function Board({currentUser}){
+
     const [board, setBoard] = useState(Array(9).fill(null));    //fill the box with null
     const [state1, setState1] = useState(1);                    //set state to X(starting point)
     
@@ -22,19 +22,33 @@ export function Board(props){
         let go;
         go = [...board]
         if(!go[n]){
-            if(state1 === 1){
-                go[n] = "X";
-                setState1(0);
+            if (currentUser === user["X"]){
+                if(state1 === 1){
+                    go[n] = "X";
+                    setState1(0);
+                    setBoard(go);
+                    socket.emit('click', {go: go, setState1:state1});
+                }
+                else{
+                    console.log("Please wait for your turn!");
+                }
+                
             }
-            else{
-                go[n] = "O";
-                setState1(1);
+            if (currentUser === user["O"]){
+                if(state1 === 0){
+                    go[n] = "O";
+                    setState1(1);
+                    setBoard(go);
+                    socket.emit('click', {go: go, setState1:state1});
+                }
+                else{
+                    console.log("Please wait for your turn!");
+                }
             }
+            
+            
         }
-        setBoard(go);
-        //setBoard(prevList =>[...prevList, go])
-        socket.emit('click', {go: go, setState1:state1});
-        
+ 
     }    
     
     // The function inside useEffect is only run whenever any variable in the array
@@ -80,9 +94,6 @@ export function Board(props){
             
             
         });
-    
-    
-    
     
   }, []);
 

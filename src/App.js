@@ -16,14 +16,13 @@ function App() {
   const [usernames, setUsername] = useState(""); // State variable to store usernames
   const [loggedIn, setLoggedIn] = useState(false);  //initialize logged in status to fasle
   
-  let userInput;
   const loginOnClick = (userInput)=> {
     if(userInput != null){
-      console.log(userInput)
-      
+    
       //setUsername(prevUsernames => [...prevUsernames, usernames]);
 
       setUsername(userInput);
+    
       
       //setLoggedIn(!loggedIn)  //set loogded in to opposite
       setLoggedIn((prevLog) => {
@@ -34,6 +33,7 @@ function App() {
     };
   }
   
+  /*
   useEffect(() => {
     // Listening for a click event emitted by the server. If received, we
     // run the code in the function that is passed in as the second arg
@@ -47,12 +47,14 @@ function App() {
       //setUsernamesList([...login.setUsername]); this
     });
   }, []);
+  */
 
   //if user has logging is, user is able to see the borard 
   if(loggedIn && usernames != ""){
     return (
       <div>
-        <Board/>
+        <p>curret user {usernames}</p>
+        <Board currentUser={usernames}/>
       </div>
       
      );
