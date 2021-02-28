@@ -34,7 +34,7 @@ export function Board({currentUser}){
                 }
                 
             }
-            if (currentUser === user["O"]){
+            else if (currentUser === user["O"]){
                 if(state1 === 0){
                     go[n] = "O";
                     setState1(1);
@@ -44,6 +44,10 @@ export function Board({currentUser}){
                 else{
                     console.log("Please wait for your turn!");
                 }
+            }
+
+            else{
+                console.log("Game is in progress");
             }
             
             
