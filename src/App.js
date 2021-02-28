@@ -38,7 +38,7 @@ function App() {
     // Listening for a click event emitted by the server. If received, we
     // run the code in the function that is passed in as the second arg
     socket.on('login', (login) => {
-      console.log('A player logging in!');
+      console.log('Message from app.js A player logging in!');
       console.log(login);
       // If the server sclick (on behalf of another client), then we
       // add it to the list of messages to render it on the UI.
@@ -52,10 +52,6 @@ function App() {
   if(loggedIn && usernames != ""){
     return (
       <div>
-        <h3>Player X:</h3>
-        <h3>Player O:</h3>
-        <ul>
-        </ul>
         <Board/>
       </div>
       
