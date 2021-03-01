@@ -32,8 +32,8 @@ A public Tic Tac Toe Web game Application with more client-server interaction wh
 
   
 ### Technical Difficulties
-- A technical Difficulties that i faced while working on this project was when i ran `pip freeze > requirnment.txt` command to add all the requiremts for the heoku deployment of the web app, it did not add all the required libraries. I solved this problem by adding the requirments manually in the requirnment.txt file
-- Another technical diffrently i faced was just in general to to learn javascript and react. Reading the documentation and research alot on internet helped. Along with some video me which includes {% youtube https://www.youtube.com/watch?v=hdI2bqOjy3c %}
-- Using react state hook was alos a challenging part for me and this article helped. https://reactjs.org/docs/hooks-state.html
+- A technical Difficulties that I faced while working on this project was when I ran `pip freeze > requirnment.txt` command to add all the requiremts for the heoku deployment of the web app, it did not add all the required libraries. I solved this problem by adding the requirments manually in the requirnment.txt file
+- Another technical diffrently I faced was just in general to work with javascript and react as they are fairly new to me. Reading the documentation and researching alot on internet helped. This youtube crash coursh for beginner is good. https://www.youtube.com/watch?v=hdI2bqOjy3c
+- Using react state hook was also a challenging part for me and this article helped. https://reactjs.org/docs/hooks-state.html
 
 
