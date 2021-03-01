@@ -103,18 +103,20 @@ export function Board({currentUser}){
     
     const onReset=()=>
     {
-        let copyBoard;
-        copyBoard = [...board];
-        copyBoard.fill(null);
-        setBoard(copyBoard);
-        
-        if(state1 === 0){
-            setState1(1);
+        if(currentUser === user["X"] ||  currentUser === user["O"]){
+            let copyBoard;
+            copyBoard = [...board];
+            copyBoard.fill(null);
+            setBoard(copyBoard);
+            
+            if(state1 === 0){
+                setState1(1);
+            }
+            else{
+                setState1(0);
+            }
+            socket.emit('reset', { copyBoard: copyBoard,setState1:state1});
         }
-        else{
-            setState1(0);
-        }
-        socket.emit('reset', { copyBoard: copyBoard,setState1:state1});
     }
     
     
