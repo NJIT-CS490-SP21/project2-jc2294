@@ -10,8 +10,6 @@ const socket = io(); // Connects to socket connection
 
 export function Board({currentUser}){
     
-    let message = "";
-
     const [board, setBoard] = useState(Array(9).fill(null));    //fill the box with null
     const [state1, setState1] = useState(1);                    //set state for x to start; 1: X; 0:O
     
@@ -90,7 +88,7 @@ export function Board({currentUser}){
 
         }
         else{
-            status = "Winner: " + winner;
+            status = "Winner: " + user[winner];
 
         }
     }
@@ -185,7 +183,7 @@ export function Board({currentUser}){
 
     return(
         <div>
-            <p class="message">{status}</p>
+            <div  class="message"><h3>{status}</h3></div> 
             <div class="container">
                 <div class="players">
                     <div class="player">
