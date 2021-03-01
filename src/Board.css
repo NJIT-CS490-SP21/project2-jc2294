@@ -25,9 +25,8 @@
 
 .message {
   text-align: center;
-  margin: 50px;
+  margin: 100px;
   margin-left: 0px;
-  padding-top: 5em;
   color: rgb(55, 26, 148);
   font-size: 25px;
 }
@@ -44,7 +43,7 @@
 
 .player, .spectators{
   border-radius: 25px;
-  padding: 1em 1.3em;
+  padding: 1em 1.5em;
   margin-bottom: 5px;
   background-color: #6d6dad;
   text-align: center;
@@ -53,6 +52,8 @@
 
 .player h3{
   margin-top: 0;
+  margin-bottom: 0.6em;
+  
 }
 
 .symbol {
