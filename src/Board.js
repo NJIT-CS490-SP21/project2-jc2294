@@ -9,6 +9,8 @@ import { ListItem } from './ListItem.js';
 const socket = io(); // Connects to socket connection
 
 export function Board({currentUser}){
+    
+    let message = "";
 
     const [board, setBoard] = useState(Array(9).fill(null));    //fill the box with null
     const [state1, setState1] = useState(1);                    //set state for x to start; 1: X; 0:O
@@ -20,7 +22,7 @@ export function Board({currentUser}){
     function onClickHandler(n){
         let copyBoard;
         copyBoard = [...board];
-        if(!copyBoard[n]){
+        if(!copyBoard[n] && !calculateWinner(board)){
             if (currentUser === user["X"]){
                 if(state1 === 1){
                     copyBoard[n] = "X";
@@ -29,7 +31,7 @@ export function Board({currentUser}){
                     socket.emit('click', {copyBoard: copyBoard, setState1:state1});
                 }
                 else{
-                    console.log("Please wait for your turn!");
+                    alert("Please wait for your turn!");
                 }
                 
             }
@@ -41,12 +43,12 @@ export function Board({currentUser}){
                     socket.emit('click', {copyBoard: copyBoard, setState1:state1});
                 }
                 else{
-                    console.log("Please wait for your turn!");
+                    alert("Please wait for your turn!");
                 }
             }
 
             else{
-                console.log("Game is in progress");
+                alert("Game is in progress");
             }
             
             
@@ -70,6 +72,11 @@ export function Board({currentUser}){
             if (board[a] && board[a] === board[b] && board[a] === board[c]) {
                 return board[a];
             }
+            else{
+                if(!board.includes(null)){
+                    return "draw"
+                }
+            }
         }
         return null;
     }
@@ -78,7 +85,19 @@ export function Board({currentUser}){
     
     let status;
     if (winner) {
-        status = "Winner: " + winner;
+        if(winner === "draw"){
+            status = "Its a draw";
+
+        }
+        else{
+            status = "Winner: " + winner;
+
+        }
+    }
+    else{
+        if(!winner && winner === "draw"){
+            status = "It's a Draw"
+        }
     }
     
     
@@ -125,8 +144,6 @@ export function Board({currentUser}){
             setUser((prevUser) => ({...prevUser,
                     ['spectators']: data['spectators']
                 }));
-            
-            
         });
         
         // Listening for a click event emitted by the server. If received, we
@@ -166,16 +183,32 @@ export function Board({currentUser}){
 
     return(
         <div>
-            <h3>Player X: { user["X"] }</h3>
-            <h3>Player Y: { user["O"] }</h3>
-            <h3>Spectators: { user["spectators"] }</h3>
-            <p>{status}</p>
-             <ul>
-                { user["spectators"].map(item => <ListItem name={item} />) }
-            </ul>
-            <button onClick={onReset}>Reset</button>
-            <div class="board">
-                { board.map((item, jindex)=> <Box onClickHandler = {()=> onClickHandler(jindex) } item={item}/>) }
+            <p class="message">{status}</p>
+            <div class="container">
+                <div class="players">
+                    <div class="player">
+                        <p>Player 1</p>
+                        <h3>{ user["X"] }</h3>
+                        <h1 class="symbol">X</h1>
+                    </div>
+                    <div class="player">
+                        <p>Player 2</p>
+                        <h3>{ user["O"] }</h3>
+                        <h1 class="symbol">O</h1>
+                    </div>
+                </div>
+                <div class="boardAndReset">
+                    <div class="board">
+                        { board.map((item, jindex)=> <Box onClickHandler = {()=> onClickHandler(jindex) } item={item}/>) }
+                    </div>
+                    <button class="reset-button" onClick={onReset}>Reset</button>
+                </div>
+                <div class="spectators">
+                    <h3>Spectators: </h3>
+                     <ul>
+                        { user["spectators"].map(item => <ListItem name={item} />) }
+                    </ul>
+                </div>
             </div>
         </div>
         

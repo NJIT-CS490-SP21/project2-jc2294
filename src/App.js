@@ -53,7 +53,6 @@ function App() {
   if(loggedIn && usernames != ""){
     return (
       <div>
-        <p>curret user {usernames}</p>
         <Board currentUser={usernames}/>
       </div>
       
@@ -63,9 +62,7 @@ function App() {
   //else user is prompt to loin plage where user is able to enter their username
   else{
     return(
-      <div>
-        <h1>Play Tic-Tac-Toe</h1>
-        <p>Enter your username: </p>
+      <div class="login">
         <Login loginOnClick={loginOnClick}/>
       </div>
       );

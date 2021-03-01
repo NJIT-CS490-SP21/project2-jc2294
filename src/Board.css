@@ -12,3 +12,68 @@
   padding: 30px 0;
   font-size: 30px;
 }
+
+.message {
+  text-aligh: center;
+}
+
+.container {
+  padding-top: 5em;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  column-gap: 3em;
+  justify-content: center;    
+
+}
+
+.players{
+  display: grid;
+  align-content: start; 
+  justify-self: end;
+  margin-bottom: 0;
+  column-row: 3em;
+
+}
+
+.player, .spectators{
+  border-radius: 25px;
+  padding: 1em 1.3em;
+  margin-bottom: 5px;
+  background-color: #6d6dad;
+  text-align: center;
+    
+}
+
+.player h3{
+  margin-top: 0;
+}
+
+.symbol {
+  font: 'Noto Sans', sans-serif;
+  margin: 0;
+}
+
+.reset-button {
+    background-image: linear-gradient(to right, rgb(148, 33, 146), rgb(55, 26, 148));
+    width: 250px;
+    background-color: #00BFFF;
+    margin: 15px 30px;
+    border: none;
+    padding: 13px;
+    color: white;
+    font-size: 1em;
+}
+
+p{
+  margin: 0;
+}
+
+ul {
+  list-style-type: circle;
+  padding: 0 2em;
+}
+
+li{
+  text-align: left
+}
+
