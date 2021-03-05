@@ -4,6 +4,8 @@ import { Box } from './Box';
 import { useState, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
 import { ListItem } from './ListItem.js';
+import { TableItem } from './TableItem.js';
+
 
 
 const socket = io(); // Connects to socket connection
@@ -17,7 +19,9 @@ export function Board({currentUser}){
     let [user, setUser] = useState({ "X": "", "O": "", "spectators": []})
     
     //leaderboard
-    let [leaderboard, setLeaderboard] = useState([])
+    let [leaderboard, setLeaderboard] = useState({})
+    
+    const [isShown, setShown] = useState(false)
 
     
     //on click handler for when a user clicks on a box
@@ -118,6 +122,11 @@ export function Board({currentUser}){
         }
     }
     
+    function onShowHide() {
+        setShown((prevIsShown) => {
+            return !prevIsShown;
+        });
+    }
     
     
     // The function inside useEffect is only run whenever any variable in the array
@@ -166,10 +175,10 @@ export function Board({currentUser}){
         
         // Listening for a click event emitted by the server. If received, we
         // run the code in the function that is passed in as the second arg
-        socket.on('leaderboard', (leaderboardData) => {
+        socket.on('leaderboard', (data) => {
             console.log('new user entered received!');
-            console.log(leaderboardData);
-            setLeaderboard(leaderboardData.userss)
+            console.log(data);
+            setLeaderboard(data)
         });
         
         
@@ -221,13 +230,32 @@ export function Board({currentUser}){
                     </ul>
                 </div>
             </div>
+            
             <div>
-                <h3>LeaderBoard</h3>
-                <ul>
-                    
-                </ul>
+            <button onClick={() => {
+                onShowHide();
+            }}
+            > Show LeaderBoard
+            </button>
+                </div> {isShown === true ? ( 
+                    <div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th colspan="2">LeaderBoard</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                { Object.keys(leaderboard).map(keys => <tr><td> {keys} </td> <td>  {leaderboard[keys]} </td> </tr>) }
+                            </tbody>
+                        </table>
+                    </div>
+                ) : (
+                <div></div>
+            )
                 
-            </div>
+            }
+   
         </div>
         
         );
