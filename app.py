@@ -59,6 +59,7 @@ users = {
     "spectators":[]
 }
 
+
 @socketio.on('login')
 def on_login(data): # data is whatever arg you pass in your emit call on client
     print(str(data))
@@ -88,6 +89,12 @@ def on_login(data): # data is whatever arg you pass in your emit call on client
     socketio.emit('login', users, broadcast=True, include_self=False)
     socketio.emit('leaderboard', userss, broadcast=True, include_self=False)
     
+def updateScore(winner, loser):
+    print(winner)
+    db.session.query(models.Person).filter(models.Person.unsername == winner).update({models.Person.score: models.Person.unsername + 1})
+    db.session.query(models.Person).filter(models.Person.username == loser).update({models.Person.score: models.Person.score -1})
+
+
 
 @socketio.on('updateScore')
 def on_updateScores(data): # data is whatever arg you pass in your emit call on client
@@ -95,11 +102,16 @@ def on_updateScores(data): # data is whatever arg you pass in your emit call on 
     # This emits the 'click' event from the server to all clients except for
     # the client that emmitted the event that triggered this function
     
+    updateScore(data["winner"], data["loser"])
     
+    all_people = models.Person.query.all()
+    userss = {}
+    for person in all_people:
+        userss[person.username] = person.score
+
+    print(userss)
     
-    
-    
-    socketio.emit('updateScore',  data, broadcast=True, include_self=False)
+    socketio.emit('updateScore', userss, broadcast=True, include_self=False)
     
     
 @socketio.on('click')
