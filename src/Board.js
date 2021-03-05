@@ -86,6 +86,10 @@ export function Board({currentUser}){
     
     const winner = calculateWinner(board);
     
+    let winnerUser;
+    let loserUser;
+    
+
     let status;
     if (winner) {
         if(winner === "draw"){
@@ -94,6 +98,15 @@ export function Board({currentUser}){
         }
         else{
             status = "Winner: " + user[winner];
+            winnerUser = user[winner];
+            if (winner === 'X'){
+                loserUser = user["O"]
+            }
+            else{
+                loserUser = user["X"]
+            }
+            
+            socket.emit('updateScore', { winner:winnerUser, loser:loserUser});
 
         }
     }

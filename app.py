@@ -88,6 +88,19 @@ def on_login(data): # data is whatever arg you pass in your emit call on client
     socketio.emit('login', users, broadcast=True, include_self=False)
     socketio.emit('leaderboard', userss, broadcast=True, include_self=False)
     
+
+@socketio.on('updateScore')
+def on_updateScores(data): # data is whatever arg you pass in your emit call on client
+    print(str(data))
+    # This emits the 'click' event from the server to all clients except for
+    # the client that emmitted the event that triggered this function
+    
+    
+    
+    
+    
+    socketio.emit('updateScore',  data, broadcast=True, include_self=False)
+    
     
 @socketio.on('click')
 def on_click(data): # data is whatever arg you pass in your emit call on client
