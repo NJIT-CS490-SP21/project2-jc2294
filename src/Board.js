@@ -57,6 +57,22 @@ export function Board({currentUser}){
                 alert("Game is in progress");
             }
         }
+        
+        const winner = calculateWinner(copyBoard);
+    
+        let winnerUser;
+        let loserUser;
+        if (winner) {
+            winnerUser = user[winner];
+            if (winner === 'X'){
+                loserUser = user["O"]
+            }
+            else{
+                loserUser = user["X"]
+            }
+            socket.emit('updateScore', { winner:winnerUser, loser:loserUser});
+        }
+        
     }  
     
     function calculateWinner(board) {
@@ -86,10 +102,6 @@ export function Board({currentUser}){
     
     const winner = calculateWinner(board);
     
-    let winnerUser;
-    let loserUser;
-    
-
     let status;
     if (winner) {
         if(winner === "draw"){
@@ -98,15 +110,6 @@ export function Board({currentUser}){
         }
         else{
             status = "Winner: " + user[winner];
-            winnerUser = user[winner];
-            if (winner === 'X'){
-                loserUser = user["O"]
-            }
-            else{
-                loserUser = user["X"]
-            }
-            
-            socket.emit('updateScore', { winner:winnerUser, loser:loserUser});
 
         }
     }
@@ -189,16 +192,18 @@ export function Board({currentUser}){
         // Listening for a click event emitted by the server. If received, we
         // run the code in the function that is passed in as the second arg
         socket.on('leaderboard', (data) => {
-            console.log('new user entered received!');
+            console.log('leaderboard userss update event received!');
             console.log(data);
             setLeaderboard(data)
         });
         
+        
         socket.on('updateScore', (data) => {
-            console.log('new user entered received!');
+            console.log('leaderboard score update event received!');
             console.log(data);
             setLeaderboard(data)
         });
+        
         
         
         socket.on('reset', (data) => {

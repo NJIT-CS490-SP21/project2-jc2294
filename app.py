@@ -95,9 +95,21 @@ def on_login(data): # data is whatever arg you pass in your emit call on client
     
 def updateScore(winner, loser):
     print(winner)
-    db.session.query(models.Person).filter(models.Person.unsername == winner).update({models.Person.score: models.Person.unsername + 1})
-    db.session.query(models.Person).filter(models.Person.username == loser).update({models.Person.score: models.Person.score -1})
+    #userWinner = models.Person.query.filter_by(username=winner).first()
+    
+    #userWinner.score = 1;
+    
+    
+    #db.session.query(Person) 
+    #peter = User.query.filter_by(username='peter').first()
 
+
+    
+    #userWinner = db.session.query(models.People).filter_by(models.Person.unsername==winner).first()
+    
+    db.session.query(models.Person).filter(models.Person.username == winner).update({models.Person.score: models.Person.score + 1})
+    db.session.query(models.Person).filter(models.Person.username == loser).update({models.Person.score: models.Person.score - 1})
+    db.session.commit()
 
 
 @socketio.on('updateScore')
@@ -115,7 +127,7 @@ def on_updateScores(data): # data is whatever arg you pass in your emit call on 
 
     print(userss)
     
-    socketio.emit('updateScore', userss, broadcast=True, include_self=False)
+    socketio.emit('updateScore', userss)
     
     
 @socketio.on('click')
