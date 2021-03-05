@@ -16,6 +16,10 @@ export function Board({currentUser}){
     //all the users
     let [user, setUser] = useState({ "X": "", "O": "", "spectators": []})
     
+    //leaderboard
+    let [leaderboard, setLeaderboard] = useState([])
+
+    
     //on click handler for when a user clicks on a box
     function onClickHandler(n){
         let copyBoard;
@@ -48,10 +52,7 @@ export function Board({currentUser}){
             else{
                 alert("Game is in progress");
             }
-            
-            
         }
- 
     }  
     
     function calculateWinner(board) {
@@ -146,6 +147,7 @@ export function Board({currentUser}){
                 }));
         });
         
+        
         // Listening for a click event emitted by the server. If received, we
         // run the code in the function that is passed in as the second arg
         socket.on('click', (data) => {
@@ -161,6 +163,15 @@ export function Board({currentUser}){
                 setState1(0);
             }
         });
+        
+        // Listening for a click event emitted by the server. If received, we
+        // run the code in the function that is passed in as the second arg
+        socket.on('leaderboard', (leaderboardData) => {
+            console.log('new user entered received!');
+            console.log(leaderboardData);
+            setLeaderboard(leaderboardData.userss)
+        });
+        
         
         socket.on('reset', (data) => {
             console.log('Rest event received!');
@@ -209,6 +220,13 @@ export function Board({currentUser}){
                         { user["spectators"].map(item => <ListItem name={item} />) }
                     </ul>
                 </div>
+            </div>
+            <div>
+                <h3>LeaderBoard</h3>
+                <ul>
+                    
+                </ul>
+                
             </div>
         </div>
         

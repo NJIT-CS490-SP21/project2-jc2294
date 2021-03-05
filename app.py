@@ -79,14 +79,16 @@ def on_login(data): # data is whatever arg you pass in your emit call on client
     db.session.add(new_user)
     db.session.commit()
     all_people = models.Person.query.all()
-    userss = []
+    userss = {}
     for person in all_people:
-        userss.append(person.username)
-        
-    print(users)
+        userss[person.username] = person.score
+
+    print(userss)
     
     socketio.emit('login', users, broadcast=True, include_self=False)
-
+    socketio.emit('leaderboard', userss, broadcast=True, include_self=False)
+    
+    
 @socketio.on('click')
 def on_click(data): # data is whatever arg you pass in your emit call on client
     print(str(data))
@@ -100,7 +102,7 @@ def on_reset(data): # data is whatever arg you pass in your emit call on client
     # This emits the 'click' event from the server to all clients except for
     # the client that emmitted the event that triggered this function
     socketio.emit('reset',  data, broadcast=True, include_self=False)
-
+    
 
 # Note we need to add this line so we can import app in the python shell
 if __name__ == "__main__":
