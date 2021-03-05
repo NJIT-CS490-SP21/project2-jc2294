@@ -194,6 +194,12 @@ export function Board({currentUser}){
             setLeaderboard(data)
         });
         
+        socket.on('updateScore', (data) => {
+            console.log('new user entered received!');
+            console.log(data);
+            setLeaderboard(data)
+        });
+        
         
         socket.on('reset', (data) => {
             console.log('Rest event received!');

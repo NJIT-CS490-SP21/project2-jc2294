@@ -106,7 +106,6 @@ def on_updateScores(data): # data is whatever arg you pass in your emit call on 
     # This emits the 'click' event from the server to all clients except for
     # the client that emmitted the event that triggered this function
     
-    
     updateScore(data["winner"], data["loser"])
     
     all_people = models.Person.query.all()
