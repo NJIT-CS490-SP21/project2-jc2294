@@ -53,7 +53,10 @@ export function Leaderboard({currentUser}){
                             </tr>
                         </thead>
                         <tbody>
-                            { Object.keys(leaderboard).map(keys => <tr><td> {keys} </td> <td>  {leaderboard[keys]} </td> </tr>) }
+                            { Object.keys(leaderboard).map(keys => (currentUser == keys) ?
+                            <tr class="highlight"><td> {keys} </td> <td>  {leaderboard[keys]} </td> </tr> :
+                            <tr><td> {keys} </td> <td>  {leaderboard[keys]} </td> </tr>
+                            ) }
                         </tbody>
                     </table>
                 </div>
