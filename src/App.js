@@ -5,6 +5,8 @@ import { useState, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
 import { Board } from './Board.js';
 import { Login } from './Login.js';
+import { Leaderboard } from './Leaderboard.js';
+
 
 
 
@@ -54,6 +56,7 @@ function App() {
     return (
       <div>
         <Board currentUser={usernames}/>
+        <Leaderboard currentUser={usernames}/>
       </div>
       
      );

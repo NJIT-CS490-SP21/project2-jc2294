@@ -5,36 +5,31 @@ import { useState, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
 import { ListItem } from './ListItem.js';
 import { TableItem } from './TableItem.js';
-
+//import { LeaderBoard } from './LeaderBoard.js';
 
 
 const socket = io(); // Connects to socket connection
 
 export function Board({currentUser}){
     
-    const [board, setBoard] = useState(Array(9).fill(null));    //fill the box with null
-    const [state1, setState1] = useState(1);                    //set state for x to start; 1: X; 0:O
+    const [board, setBoard] = useState(Array(9).fill(null));    //fill the box with 9 null elemes
+    const [isXNext, setIsXNext] = useState(1);                    //set state for x to start; 1: X; 0:O
     
-    //all the users
-    let [user, setUser] = useState({ "X": "", "O": "", "spectators": []})
-    
-    //leaderboard
-    let [leaderboard, setLeaderboard] = useState({})
-    
+    let [user, setUser] = useState({ "X": "", "O": "", "spectators": []})       //all the users
+    //let [leaderboard, setLeaderboard] = useState({})                            //leaderboard
     const [isShown, setShown] = useState(false)
 
-    
     //on click handler for when a user clicks on a box
     function onClickHandler(n){
         let copyBoard;
         copyBoard = [...board];
         if(!copyBoard[n] && !calculateWinner(board)){
             if (currentUser === user["X"]){
-                if(state1 === 1){
+                if(isXNext === 1){
                     copyBoard[n] = "X";
-                    setState1(0);
+                    setIsXNext(0);
                     setBoard(copyBoard);
-                    socket.emit('click', {copyBoard: copyBoard, setState1:state1});
+                    socket.emit('click', {copyBoard: copyBoard, setIsXNext:isXNext});
                 }
                 else{
                     alert("Please wait for your turn!");
@@ -42,11 +37,11 @@ export function Board({currentUser}){
                 
             }
             else if (currentUser === user["O"]){
-                if(state1 === 0){
+                if(isXNext === 0){
                     copyBoard[n] = "O";
-                    setState1(1);
+                    setIsXNext(1);
                     setBoard(copyBoard);
-                    socket.emit('click', {copyBoard: copyBoard, setState1:state1});
+                    socket.emit('click', {copyBoard: copyBoard, setIsXNext:isXNext});
                 }
                 else{
                     alert("Please wait for your turn!");
@@ -128,13 +123,13 @@ export function Board({currentUser}){
             copyBoard.fill(null);
             setBoard(copyBoard);
             
-            if(state1 === 0){
-                setState1(1);
+            if(isXNext === 0){
+                setIsXNext(1);
             }
             else{
-                setState1(0);
+                setIsXNext(0);
             }
-            socket.emit('reset', { copyBoard: copyBoard,setState1:state1});
+            socket.emit('reset', { copyBoard: copyBoard,setIsXNext:isXNext});
         }
     }
     
@@ -149,7 +144,6 @@ export function Board({currentUser}){
     // (passed as the second arg to useEffect) changes. Since this array is empty
     // here, then the function will only run once at the very beginning of mounting.
     useEffect(() => {
-        
         // Listening for a log in click event emitted by the server. If received, we
         // run the code in the function that is passed in as the second arg
         socket.on('login', (data) => {
@@ -181,16 +175,18 @@ export function Board({currentUser}){
             // If the server sclick (on behalf of another client), then we
             // add it to the list of messages to render it on the UI.
             setBoard([...data.copyBoard]);
-            if(data.setState1 === 0){
-                setState1(1);
+            if(data.setIsXNext === 0){
+                setIsXNext(1);
             }
             else {
-                setState1(0);
+                setIsXNext(0);
             }
         });
         
         // Listening for a click event emitted by the server. If received, we
         // run the code in the function that is passed in as the second arg
+        
+        /*
         socket.on('leaderboard', (data) => {
             console.log('leaderboard userss update event received!');
             console.log(data);
@@ -205,7 +201,7 @@ export function Board({currentUser}){
         });
         
         
-        
+        */
         socket.on('reset', (data) => {
             console.log('Rest event received!');
             console.log(data);
@@ -214,11 +210,11 @@ export function Board({currentUser}){
            
             setBoard([...data.copyBoard]);
             
-            if(data.setState1 === 0){
-                setState1(1);
+            if(data.setIsXNext === 0){
+                setIsXNext(1);
             }
             else {
-                setState1(0);
+                setIsXNext(0);
             } 
         });
     
@@ -254,32 +250,6 @@ export function Board({currentUser}){
                     </ul>
                 </div>
             </div>
-            
-            <div>
-            <button onClick={() => {
-                onShowHide();
-            }}
-            > Show LeaderBoard
-            </button>
-                </div> {isShown === true ? ( 
-                    <div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th colspan="2">LeaderBoard</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                { Object.keys(leaderboard).map(keys => <tr><td> {keys} </td> <td>  {leaderboard[keys]} </td> </tr>) }
-                            </tbody>
-                        </table>
-                    </div>
-                ) : (
-                <div></div>
-            )
-                
-            }
-   
         </div>
         
         );
