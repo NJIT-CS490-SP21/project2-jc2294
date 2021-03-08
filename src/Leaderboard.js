@@ -1,12 +1,14 @@
 import React from 'react';
 import { useState, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
+import './Leaderboard.css';
+
 
 const socket = io(); // Connects to socket connection
 
 export function Leaderboard({currentUser}){
     
-    let [leaderboard, setLeaderboard] = useState({})                    //leaderboard
+    let [leaderboard, setLeaderboard] = useState()                    //leaderboard
     const [isShown, setShown] = useState(false)
 
     
@@ -40,12 +42,12 @@ export function Leaderboard({currentUser}){
   
 
     return(
-        <div>
+        <div class="leaderboard">
             <div>
-                <button onClick={() => { onShowHide(); } } > Show LeaderBoard </button>
+                <button class="leaderboard-btn" onClick={() => { onShowHide(); } } > Show LeaderBoard </button>
             </div> 
             {isShown === true ? ( 
-                <div>
+                <div class="table">
                     <table>
                         <thead>
                             <tr>
@@ -53,10 +55,14 @@ export function Leaderboard({currentUser}){
                             </tr>
                         </thead>
                         <tbody>
-                            { Object.keys(leaderboard).map(keys => (currentUser == keys) ?
-                            <tr class="highlight"><td> {keys} </td> <td>  {leaderboard[keys]} </td> </tr> :
-                            <tr><td> {keys} </td> <td>  {leaderboard[keys]} </td> </tr>
-                            ) }
+                            <tr>
+                                <th>Player</th>
+                                <th>Score</th>
+                              </tr>
+                            { leaderboard.map((item)=>Object.keys(item).map(keys => (currentUser === keys) ?
+                            <tr class="highlight"><td> {keys} </td> <td>  {item[keys]} </td> </tr> :
+                            <tr><td> {keys} </td> <td>  {item[keys]} </td> </tr>
+                            )) }
                         </tbody>
                     </table>
                 </div>

@@ -6,15 +6,13 @@
   left: 50%;
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
-  
-  padding: 30px 20px;
+  padding: 80px 60px;
 }
 
 .logn-h1 {
     color: rgb(83, 213, 253);
     font-size: 3em;
 }
-
 
 input {
     padding: 12px 20px;

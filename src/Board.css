@@ -13,11 +13,9 @@
   font-size: 30px;
 }
 
-
-
 .container {
   display: grid;
-  grid-template-columns: auto auto auto;
+  grid-template-columns: auto auto;
   column-gap: 3em;
   justify-content: center;    
 
@@ -25,40 +23,41 @@
 
 .message {
   text-align: center;
-  margin: 100px;
-  margin-left: 0px;
   color: rgb(55, 26, 148);
-  font-size: 25px;
+  font-size: 1.5em;
+  border-bottom: 2px solid purple;
+  padding: 0;
 }
 
+.name{
+  font-size: 25px;
+  color: rgb(55, 26, 148);
+
+}
 
 .players{
   display: grid;
   align-content: start; 
   justify-self: end;
   margin-bottom: 0;
-  column-row: 3em;
-
-}
-
-.player, .spectators{
-  border-radius: 25px;
-  padding: 1em 1.5em;
+  column-row: 6em;
   margin-bottom: 5px;
-  background-color: #6d6dad;
   text-align: center;
-    
+
 }
 
 .player h3{
-  margin-top: 0;
+  margin-top: 0.5;
   margin-bottom: 0.6em;
-  
+}
+
+.player p {
+  text-align: left;
 }
 
 .symbol {
   font: 'Noto Sans', sans-serif;
-  margin: 0;
+  margin-top: 0.2em;
 }
 
 .reset-button {
@@ -85,9 +84,6 @@ li{
   text-align: left
 }
 
-.highlight {
-  background-color: pink;
-}
 
 
 

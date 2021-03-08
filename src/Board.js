@@ -5,9 +5,7 @@ import { useState, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
 import { ListItem } from './ListItem.js';
 import { TableItem } from './TableItem.js';
-//import { LeaderBoard } from './LeaderBoard.js';
-
-
+import { Leaderboard } from './Leaderboard.js';
 const socket = io(); // Connects to socket connection
 
 export function Board({currentUser}){
@@ -16,9 +14,8 @@ export function Board({currentUser}){
     const [isXNext, setIsXNext] = useState(1);                    //set state for x to start; 1: X; 0:O
     
     let [user, setUser] = useState({ "X": "", "O": "", "spectators": []})       //all the users
-    //let [leaderboard, setLeaderboard] = useState({})                            //leaderboard
     const [isShown, setShown] = useState(false)
-
+  
     //on click handler for when a user clicks on a box
     function onClickHandler(n){
         let copyBoard;
@@ -139,7 +136,6 @@ export function Board({currentUser}){
         });
     }
     
-    
     // The function inside useEffect is only run whenever any variable in the array
     // (passed as the second arg to useEffect) changes. Since this array is empty
     // here, then the function will only run once at the very beginning of mounting.
@@ -181,27 +177,9 @@ export function Board({currentUser}){
             else {
                 setIsXNext(0);
             }
+            
         });
         
-        // Listening for a click event emitted by the server. If received, we
-        // run the code in the function that is passed in as the second arg
-        
-        /*
-        socket.on('leaderboard', (data) => {
-            console.log('leaderboard userss update event received!');
-            console.log(data);
-            setLeaderboard(data)
-        });
-        
-        
-        socket.on('updateScore', (data) => {
-            console.log('leaderboard score update event received!');
-            console.log(data);
-            setLeaderboard(data)
-        });
-        
-        
-        */
         socket.on('reset', (data) => {
             console.log('Rest event received!');
             console.log(data);
@@ -216,38 +194,37 @@ export function Board({currentUser}){
             else {
                 setIsXNext(0);
             } 
-        });
+        });        
+
     
   }, []);
   
-
     return(
         <div>
-            <div  class="message"><h3>{status}</h3></div> 
+            <p><h3 class="message">{ status }</h3></p>
             <div class="container">
                 <div class="players">
                     <div class="player">
-                        <p>Player 1</p>
-                        <h3>{ user["X"] }</h3>
+                        <p>Player 1: <span class="name">{ user["X"] }</span></p>
                         <h1 class="symbol">X</h1>
                     </div>
                     <div class="player">
-                        <p>Player 2</p>
-                        <h3>{ user["O"] }</h3>
+                        <p>Player 2: <span class="name">{ user["O"] }</span></p>
                         <h1 class="symbol">O</h1>
                     </div>
+                    <div class="player">
+                    <h3>Spectators: </h3>
+                     <ul>
+                        { user["spectators"].map(item => <ListItem name={item} />) }
+                    </ul>
+                </div>
                 </div>
                 <div class="boardAndReset">
                     <div class="board">
                         { board.map((item, jindex)=> <Box onClickHandler = {()=> onClickHandler(jindex) } item={item}/>) }
                     </div>
+                   
                     <button class="reset-button" onClick={onReset}>Reset</button>
-                </div>
-                <div class="spectators">
-                    <h3>Spectators: </h3>
-                     <ul>
-                        { user["spectators"].map(item => <ListItem name={item} />) }
-                    </ul>
                 </div>
             </div>
         </div>

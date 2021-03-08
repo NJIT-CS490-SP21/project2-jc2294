@@ -45,20 +45,30 @@ def on_connect():
 def on_disconnect():
     print('User disconnected!')
 
-# When a client emits the event 'chat' to the server, this function is run
-# 'chat' is a custom event name that we just decided
-@socketio.on('chat')
-def on_chat(data): # data is whatever arg you pass in your emit call on client
-    print(str(data))
-    # This emits the 'chat' event from the server to all clients except for
-    # the client that emmitted the event that triggered this function
-    socketio.emit('chat',  data, broadcast=True, include_self=False)
+def getAllPlayersFromDB():
     
-#list of users
+    all_people = models.Person.query.order_by(models.Person.score.desc()).all()
+    
+    players = []
+    for person in all_people:
+        players.append({person.username:person.score})
+        
+    return players
+
+
+def addNewPlayerToDB(currentUser):
+    
+    temp = models.Person.query.filter_by(username=currentUser).first()
+    if not temp:
+        #working with databsse
+        new_user = models.Person(username=currentUser, score=100)
+        db.session.add(new_user)
+        db.session.commit()
+
+#list of all current users: X, O, and spectators
 users = {
     "spectators":[]
 }
-
 
 @socketio.on('login')
 def on_login(data): # data is whatever arg you pass in your emit call on client
@@ -75,38 +85,15 @@ def on_login(data): # data is whatever arg you pass in your emit call on client
 
     print(users)
     
+    addNewPlayerToDB(currentUser)
+    players = getAllPlayersFromDB()
     
-    temp = models.Person.query.filter_by(username=currentUser).first()
-    if not temp:
-        #working with databsse
-        new_user = models.Person(username=data['username'], score=100)
-        db.session.add(new_user)
-        db.session.commit()
-        
-    all_people = models.Person.query.all()
-        
-    userss = {}
-    for person in all_people:
-        userss[person.username] = person.score
-    
-    print(userss)
-    socketio.emit('leaderboard', userss, broadcast=True, include_self=False)
+    print(players)
+    socketio.emit('leaderboard', players, broadcast=True, include_self=False)
     socketio.emit('login', users, broadcast=True, include_self=False)
     
 def updateScore(winner, loser):
     print(winner)
-    #userWinner = models.Person.query.filter_by(username=winner).first()
-    
-    #userWinner.score = 1;
-    
-    
-    #db.session.query(Person) 
-    #peter = User.query.filter_by(username='peter').first()
-
-
-    
-    #userWinner = db.session.query(models.People).filter_by(models.Person.unsername==winner).first()
-    
     db.session.query(models.Person).filter(models.Person.username == winner).update({models.Person.score: models.Person.score + 1})
     db.session.query(models.Person).filter(models.Person.username == loser).update({models.Person.score: models.Person.score - 1})
     db.session.commit()
@@ -119,16 +106,10 @@ def on_updateScores(data): # data is whatever arg you pass in your emit call on 
     # the client that emmitted the event that triggered this function
     
     updateScore(data["winner"], data["loser"])
+    players = getAllPlayersFromDB()
+    print(players)
     
-    all_people = models.Person.query.all()
-    userss = {}
-    for person in all_people:
-        userss[person.username] = person.score
-
-    print(userss)
-    
-    socketio.emit('updateScore', userss)
-    
+    socketio.emit('updateScore', players)
     
 @socketio.on('click')
 def on_click(data): # data is whatever arg you pass in your emit call on client
