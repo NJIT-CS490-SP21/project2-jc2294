@@ -20,49 +20,53 @@ export function Board({currentUser}){
     function onClickHandler(n){
         let copyBoard;
         copyBoard = [...board];
-        if(!copyBoard[n] && !calculateWinner(board)){
-            if (currentUser === user["X"]){
-                if(isXNext === 1){
-                    copyBoard[n] = "X";
-                    setIsXNext(0);
-                    setBoard(copyBoard);
-                    socket.emit('click', {copyBoard: copyBoard, setIsXNext:isXNext});
+        if(!copyBoard[n]){
+            if (!calculateWinner(board)){
+                if (currentUser === user["X"]){
+                    if(isXNext === 1){
+                        copyBoard[n] = "X";
+                        setIsXNext(0);
+                        setBoard(copyBoard);
+                        socket.emit('click', {copyBoard: copyBoard, setIsXNext:isXNext});
+                    }
+                    else{
+                        alert("Please wait for your turn!");
+                    }
+                    
                 }
-                else{
-                    alert("Please wait for your turn!");
+                else if (currentUser === user["O"]){
+                    if(isXNext === 0){
+                        copyBoard[n] = "O";
+                        setIsXNext(1);
+                        setBoard(copyBoard);
+                        socket.emit('click', {copyBoard: copyBoard, setIsXNext:isXNext});
+                    }
+                    else{
+                        alert("Please wait for your turn!");
+                    }
                 }
-                
-            }
-            else if (currentUser === user["O"]){
-                if(isXNext === 0){
-                    copyBoard[n] = "O";
-                    setIsXNext(1);
-                    setBoard(copyBoard);
-                    socket.emit('click', {copyBoard: copyBoard, setIsXNext:isXNext});
-                }
-                else{
-                    alert("Please wait for your turn!");
-                }
-            }
-
-            else{
-                alert("Game is in progress");
-            }
-        }
-        
-        const winner = calculateWinner(copyBoard);
     
-        let winnerUser;
-        let loserUser;
-        if (winner) {
-            winnerUser = user[winner];
-            if (winner === 'X'){
-                loserUser = user["O"]
+                else{
+                    alert("Game is in progress");
+                }
             }
-            else{
-                loserUser = user["X"]
+            
+            const winner = calculateWinner(copyBoard);
+            console.log(winner);
+        
+            let winnerUser;
+            let loserUser;
+            if (winner) {
+                winnerUser = user[winner];
+                if (winner === 'X'){
+                    loserUser = user["O"]
+                }
+                else{
+                    loserUser = user["X"]
+                }
+                socket.emit('updateScore', { winner:winnerUser, loser:loserUser});
             }
-            socket.emit('updateScore', { winner:winnerUser, loser:loserUser});
+            
         }
         
     }  
