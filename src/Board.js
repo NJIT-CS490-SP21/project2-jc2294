@@ -87,12 +87,12 @@ export function Board({currentUser}){
             if (board[a] && board[a] === board[b] && board[a] === board[c]) {
                 return board[a];
             }
-            else{
-                if(!board.includes(null)){
-                    return "draw"
-                }
-            }
         }
+        
+        if(!board.includes(null)){
+            return "draw"
+        }
+        
         return null;
     }
     
