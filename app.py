@@ -1,5 +1,5 @@
 import os
-from flask import Flask, send_from_directory, json, session
+from flask import Flask, send_from_directory, json
 from flask_socketio import SocketIO
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
@@ -47,15 +47,12 @@ def on_disconnect():
 
 def getAllPlayersFromDB():
     all_people = models.Person.query.order_by(models.Person.score.desc()).all()
-    
     players = []
     for person in all_people:
         players.append({person.username:person.score})
-        
     return players
     
 def addNewPlayerToDB(currentUser):
-    
     temp = models.Person.query.filter_by(username=currentUser).first()
     if not temp:
         #working with databsse
@@ -85,17 +82,14 @@ def on_login(data): # data is whatever arg you pass in your emit call on client
     
     addNewPlayerToDB(currentUser)
     players = getAllPlayersFromDB()
-    
     print(players)
     socketio.emit('leaderboard', players, broadcast=True, include_self=False)
     socketio.emit('login', users, broadcast=True, include_self=False)
-    
 def updateScore(winner, loser):
     print(winner)
     db.session.query(models.Person).filter(models.Person.username == winner).update({models.Person.score: models.Person.score + 1})
     db.session.query(models.Person).filter(models.Person.username == loser).update({models.Person.score: models.Person.score - 1})
     db.session.commit()
-
 
 @socketio.on('updateScore')
 def on_updateScores(data): # data is whatever arg you pass in your emit call on client
