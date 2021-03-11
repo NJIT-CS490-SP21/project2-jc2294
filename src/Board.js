@@ -4,7 +4,6 @@ import { Box } from './Box';
 import { useState, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
 import { ListItem } from './ListItem.js';
-import { TableItem } from './TableItem.js';
 import { Leaderboard } from './Leaderboard.js';
 const socket = io(); // Connects to socket connection
 
@@ -15,22 +14,25 @@ export function Board({currentUser}){
     
     let [user, setUser] = useState({ "X": "", "O": "", "spectators": []})       //all the users
     const [isShown, setShown] = useState(false)
+    
+    const [message, setMessage] = useState("X's will make move");
   
     //on click handler for when a user clicks on a box
     function onClickHandler(n){
         let copyBoard;
         copyBoard = [...board];
-        if(!copyBoard[n]){
+        if(!copyBoard[n] && !calculateWinner(board)){
             if (!calculateWinner(board)){
                 if (currentUser === user["X"]){
                     if(isXNext === 1){
                         copyBoard[n] = "X";
                         setIsXNext(0);
+                        setMessage("O's turn to make move");
                         setBoard(copyBoard);
                         socket.emit('click', {copyBoard: copyBoard, setIsXNext:isXNext});
                     }
                     else{
-                        alert("Please wait for your turn!");
+                        setMessage("Please wait for your turn!");
                     }
                     
                 }
@@ -38,16 +40,17 @@ export function Board({currentUser}){
                     if(isXNext === 0){
                         copyBoard[n] = "O";
                         setIsXNext(1);
+                        setMessage("X's turn to make move");
                         setBoard(copyBoard);
                         socket.emit('click', {copyBoard: copyBoard, setIsXNext:isXNext});
                     }
                     else{
-                        alert("Please wait for your turn!");
+                        setMessage("Please wait for your turn!");
                     }
                 }
     
                 else{
-                    alert("Game is in progress");
+                    setMessage("Game is in progress");
                 }
             }
             
@@ -59,10 +62,13 @@ export function Board({currentUser}){
             if (winner) {
                 winnerUser = user[winner];
                 if (winner === 'X'){
-                    loserUser = user["O"]
+                    loserUser = user["O"];
                 }
                 else{
-                    loserUser = user["X"]
+                    loserUser = user["X"];
+                }
+                
+                if(winner === "draw"){
                 }
                 socket.emit('updateScore', { winner:winnerUser, loser:loserUser});
             }
@@ -96,6 +102,7 @@ export function Board({currentUser}){
         return null;
     }
     
+
     const winner = calculateWinner(board);
     
     let status;
@@ -111,9 +118,11 @@ export function Board({currentUser}){
     }
     else{
         if(!winner && winner === "draw"){
-            status = "It's a Draw"
+            status = status = "It's a Draw";
         }
     }
+    
+
     
     
     const onReset=()=>
@@ -126,9 +135,11 @@ export function Board({currentUser}){
             
             if(isXNext === 0){
                 setIsXNext(1);
+                setMessage("X's turn to make move");
             }
             else{
                 setIsXNext(0);
+                setMessage("O's turn to make move");
             }
             socket.emit('reset', { copyBoard: copyBoard,setIsXNext:isXNext});
         }
@@ -177,9 +188,13 @@ export function Board({currentUser}){
             setBoard([...data.copyBoard]);
             if(data.setIsXNext === 0){
                 setIsXNext(1);
+                setMessage("X's turn to make move");
+
             }
             else {
                 setIsXNext(0);
+                setMessage("O's turn to make move");
+
             }
             
         });
@@ -194,9 +209,11 @@ export function Board({currentUser}){
             
             if(data.setIsXNext === 0){
                 setIsXNext(1);
+                setMessage("X's turn to make move");
             }
             else {
                 setIsXNext(0);
+                setMessage("O's turn to make move");
             } 
         });        
 
@@ -205,7 +222,6 @@ export function Board({currentUser}){
   
     return(
         <div>
-            <p><h3 class="message">{ status }</h3></p>
             <div class="container">
                 <div class="players">
                     <div class="player">
@@ -224,11 +240,12 @@ export function Board({currentUser}){
                 </div>
                 </div>
                 <div class="boardAndReset">
+                    <p><h3 class="message">{ message }</h3></p>
                     <div class="board">
                         { board.map((item, jindex)=> <Box onClickHandler = {()=> onClickHandler(jindex) } item={item}/>) }
                     </div>
-                   
                     <button class="reset-button" onClick={onReset}>Reset</button>
+                    <p><h3 class="message">{ status }</h3></p>
                 </div>
             </div>
         </div>

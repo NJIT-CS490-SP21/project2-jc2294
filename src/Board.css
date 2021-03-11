@@ -22,11 +22,12 @@
 }
 
 .message {
-  text-align: center;
   color: rgb(55, 26, 148);
   font-size: 1.5em;
   border-bottom: 2px solid purple;
   padding: 0;
+  text-align: center;
+  
 }
 
 .name{
@@ -43,6 +44,7 @@
   column-row: 6em;
   margin-bottom: 5px;
   text-align: center;
+  padding-top: 50px;
 
 }
 
