@@ -46,7 +46,6 @@ def on_disconnect():
     print('User disconnected!')
 
 def getAllPlayersFromDB():
-    
     all_people = models.Person.query.order_by(models.Person.score.desc()).all()
     
     players = []
@@ -54,8 +53,7 @@ def getAllPlayersFromDB():
         players.append({person.username:person.score})
         
     return players
-
-
+    
 def addNewPlayerToDB(currentUser):
     
     temp = models.Person.query.filter_by(username=currentUser).first()
@@ -101,8 +99,8 @@ def updateScore(winner, loser):
 
 @socketio.on('updateScore')
 def on_updateScores(data): # data is whatever arg you pass in your emit call on client
-
     print(str(data))
+    
     updateScore(data["winner"], data["loser"])
     players = getAllPlayersFromDB()
     print(players)
@@ -118,8 +116,9 @@ def on_click(data): # data is whatever arg you pass in your emit call on client
     
 @socketio.on('reset')
 def on_reset(data): # data is whatever arg you pass in your emit call on client
-
     print(str(data))
+    # This emits the 'click' event from the server to all clients except for
+    # the client that emmitted the event that triggered this function
     socketio.emit('reset',  data, broadcast=True, include_self=False)
     
 

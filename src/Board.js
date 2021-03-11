@@ -1,20 +1,16 @@
 import React from 'react';
 import './Board.css';
 import { Box } from './Box';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 import { ListItem } from './ListItem.js';
-import { Leaderboard } from './Leaderboard.js';
 const socket = io(); // Connects to socket connection
 
 export function Board({currentUser}){
     
     const [board, setBoard] = useState(Array(9).fill(null));    //fill the box with 9 null elemes
     const [isXNext, setIsXNext] = useState(1);                    //set state for x to start; 1: X; 0:O
-    
     let [user, setUser] = useState({ "X": "", "O": "", "spectators": []})       //all the users
-    const [isShown, setShown] = useState(false)
-    
     const [message, setMessage] = useState("X's will make move");
   
     //on click handler for when a user clicks on a box
@@ -145,12 +141,6 @@ export function Board({currentUser}){
         }
     }
     
-    function onShowHide() {
-        setShown((prevIsShown) => {
-            return !prevIsShown;
-        });
-    }
-    
     // The function inside useEffect is only run whenever any variable in the array
     // (passed as the second arg to useEffect) changes. Since this array is empty
     // here, then the function will only run once at the very beginning of mounting.
@@ -160,20 +150,21 @@ export function Board({currentUser}){
         socket.on('login', (data) => {
             console.log('Message from board.js A player has entered in the game');
             console.log(data);
+            
             if(data['X']){
                 setUser((prevUser) => ({...prevUser,
-                    ['X']: data['X']
+                    'X': data['X']
                 }));
             }
             
             if(data['O']){
                 setUser((prevUser) => ({...prevUser,
-                    ['O']: data['O']
+                    'O': data['O']
                 }));
             }
             
             setUser((prevUser) => ({...prevUser,
-                    ['spectators']: data['spectators']
+                    'spectators': data['spectators']
                 }));
         });
         

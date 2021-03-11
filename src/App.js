@@ -1,7 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
-import { ListItem } from './ListItem.js';
-import { useState, useRef, useEffect } from 'react';
+import { useState} from 'react';
 import io from 'socket.io-client';
 import { Board } from './Board.js';
 import { Login } from './Login.js';
@@ -29,7 +27,7 @@ function App() {
   }
   
   //if user has logging is, user is able to see the borard and leaderboard
-  if(loggedIn && usernames != ""){
+  if(loggedIn && usernames !== ""){
     return (
       <div class="gamePage">
         <Board currentUser={usernames}/>
