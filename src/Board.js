@@ -11,7 +11,7 @@ export function Board({currentUser}){
     const [board, setBoard] = useState(Array(9).fill(null));    //fill the box with 9 null elemes
     const [isXNext, setIsXNext] = useState(1);                    //set state for x to start; 1: X; 0:O
     let [user, setUser] = useState({ "X": "", "O": "", "spectators": []})       //all the users
-    const [message, setMessage] = useState("X's will make move");
+    const [message, setMessage] = useState("X will make the first move");
   
     //on click handler for when a user clicks on a box
     function onClickHandler(n){
