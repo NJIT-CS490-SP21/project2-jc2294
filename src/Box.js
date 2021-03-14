@@ -1,6 +1,12 @@
 import React from 'react';
 import './Board.css';
+import PropTypes from 'prop-types';
 
-export function Box({ onClickHandler, item }){
-    return <div class="box" onClick = { (event) => onClickHandler(event) }>{item}</div>
+export default function Box({ onClickHandler, item }) {
+  return <div className="box" role="button" tabIndex="-1" onClick={(event) => onClickHandler(event)} onKeyDown={onClickHandler}>{item}</div>;
 }
+
+Box.propTypes = {
+  onClickHandler: PropTypes.func.isRequired,
+  item: PropTypes.string.isRequired,
+};

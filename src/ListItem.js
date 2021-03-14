@@ -1,8 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export function ListItem(props){
-    //const name = "my name";
-    //return <li>{name }</li>
-    return <li>{props.name }</li>
+export default function ListItem({ name }) {
+  return <li>{name }</li>;
+}
 
-} 
+ListItem.propTypes = {
+  name: PropTypes.string.isRequired,
+};
