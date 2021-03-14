@@ -93,6 +93,20 @@ def on_login(
     print(players)
     socketio.emit('leaderboard', players, broadcast=True, include_self=False)
     socketio.emit('login', users, broadcast=True, include_self=False)
+    
+def on_login_test(
+        data):  # data is whatever arg you pass in your emit call on client
+    ''' This emits the 'click' event from the server to all clients except for
+      the client that emmitted the event that triggered this function '''
+
+    current_user = data["username"]
+    if "X" not in users:
+        users["X"] = current_user
+    elif "O" not in users:
+        users["O"] = current_user
+    else:
+        users["spectators"].append(current_user)
+    return users
 
 
 def update_score(winner, loser):
@@ -104,7 +118,7 @@ def update_score(winner, loser):
     db.session.query(
         models.Person).filter(models.Person.username == loser).update(
             {models.Person.score: models.Person.score - 1})
-    db.session.commit()
+    db.session.commit() 
 
 
 @socketio.on('updateScore')
