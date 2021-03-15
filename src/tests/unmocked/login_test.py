@@ -57,6 +57,26 @@ class UpdateUserTestCase(unittest.TestCase):
             }
             # TODO add another test case
         ]
+        
+        self.failure_test_params2 = [
+            {
+                USERS_INPUT: {
+                   'username': 'user1'
+                },
+                EXPECTED_OUTPUT: {
+                    'spectators': ["user1"],
+                }
+            },
+            {
+                USERS_INPUT: {
+                    'username': 'user2'
+                },
+                EXPECTED_OUTPUT: {
+                    'spectators': [],
+                }
+            }
+            # TODO add another test case
+        ]
 
     def test_add_user(self):
         for test in self.success_test_params:
@@ -68,8 +88,22 @@ class UpdateUserTestCase(unittest.TestCase):
 
             # Use assert checks to see compare values of the results
             self.assertEqual(actual_result, expected_result)
+        print(actual_result)
+        print(expected_result)
             
     def test_not_add_user(self):
+        for test in self.failure_test_params:
+
+            actual_result = on_login_test(test[USERS_INPUT])
+            
+            # Assign the expected output as a variable from test
+            expected_result = test[EXPECTED_OUTPUT]
+        
+
+            # Use assert checks to see compare values of the results
+            self.assertNotEqual(actual_result, expected_result)
+            
+    def test_not_add_user2(self):
         for test in self.failure_test_params:
 
             actual_result = on_login_test(test[USERS_INPUT])

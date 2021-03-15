@@ -65,6 +65,18 @@ def add_new_player(current_user):
         new_user = models.Person(username=current_user, score=100)
         db.session.add(new_user)
         db.session.commit()
+        
+def add_user(current_user):
+    ''' helper method to add new player to database '''
+    new_user = models.Person(username=current_user, score=100)
+    db.session.add(new_user)
+    db.session.commit()
+    players = []
+    all_people = models.Person.query.all()
+    for person in all_people:
+        players.append(person.username)
+    return players   
+  
 
 
 #list of all current users: X, O, and spectators
