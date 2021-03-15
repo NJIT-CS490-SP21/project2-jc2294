@@ -1,4 +1,4 @@
-.login{
+.login {
   /*background-image: linear-gradient(to right, rgb(83, 213, 253), rgb(177, 140, 254));*/
   background-color: white;
   position: fixed;
@@ -10,35 +10,32 @@
 }
 
 .logn-h1 {
-    color: rgb(83, 213, 253);
-    font-size: 3em;
+  color: rgb(83, 213, 253);
+  font-size: 3em;
 }
 
 input {
-    padding: 12px 20px;
-    border: none;
-    border-bottom: 2px solid purple;
-    background: transparent;
-    width: 210px;
-    font-size: 1em;
-
+  padding: 12px 20px;
+  border: none;
+  border-bottom: 2px solid purple;
+  background: transparent;
+  width: 210px;
+  font-size: 1em;
 }
 
-
-input:focus, textarea:focus, select:focus{
-        outline: none;
-    }
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+}
 
 .login-button {
-    background-image: linear-gradient(to right, rgb(83, 213, 253), rgb(177, 140, 254));
-    width: 250px;
-    background-color: #00BFFF;
-    margin-top: 10px;
-    border: none;
-    padding: 13px;
-    color: white;
-    font-size: 1em;
-
+  background-image: linear-gradient(to right, rgb(83, 213, 253), rgb(177, 140, 254));
+  width: 250px;
+  background-color: #00bfff;
+  margin-top: 10px;
+  border: none;
+  padding: 13px;
+  color: white;
+  font-size: 1em;
 }
-
-

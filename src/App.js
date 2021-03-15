@@ -28,7 +28,6 @@ function App() {
         <Board currentUser={usernames} />
         <Leaderboard currentUser={usernames} />
       </div>
-
     );
   }
   // else user is prompt to loin plage where user is able to enter their username

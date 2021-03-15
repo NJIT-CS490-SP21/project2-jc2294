@@ -37,10 +37,9 @@
   }
 }
 
-
 .gamePage {
   display: grid;
   grid-template-columns: auto auto;
   column-gap: 3em;
-  justify-content: center; 
+  justify-content: center;
 }

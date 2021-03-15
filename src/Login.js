@@ -13,7 +13,13 @@ export default function Login({ loginOnClick }) {
       <h1 className="login-h1">Tic Tac Toe</h1>
       <p>Enter your username: </p>
       <input ref={user} id="userIn" type="text" />
-      <button type="submit" className="login-button" onClick={() => loginOnClick(user.current.value)}>Login</button>
+      <button
+        type="submit"
+        className="login-button"
+        onClick={() => loginOnClick(user.current.value)}
+      >
+        Login
+      </button>
     </div>
   );
 }

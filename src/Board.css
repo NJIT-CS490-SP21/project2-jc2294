@@ -1,8 +1,8 @@
 .board-css {
-	width: 300px; /* Total horizontal dimensions */
-	height: 300px; /* Total vertical dimensions */
-	display: grid; /* Enables CSS Grid */ 
-	grid-template-columns: repeat(3, 1fr); /* Total horizontal space broken into 3 columns */
+  width: 300px; /* Total horizontal dimensions */
+  height: 300px; /* Total vertical dimensions */
+  display: grid; /* Enables CSS Grid */
+  grid-template-columns: repeat(3, 1fr); /* Total horizontal space broken into 3 columns */
   grid-template-rows: repeat(3, 1fr); /* Total vertical space broken into 3 rows */
 }
 
@@ -17,8 +17,7 @@
   display: grid;
   grid-template-columns: auto auto;
   column-gap: 3em;
-  justify-content: center;    
-
+  justify-content: center;
 }
 
 .message {
@@ -27,28 +26,25 @@
   border-bottom: 2px solid purple;
   padding: 0;
   text-align: center;
-  
 }
 
-.name{
+.name {
   font-size: 25px;
   color: rgb(55, 26, 148);
-
 }
 
-.players{
+.players {
   display: grid;
-  align-content: start; 
+  align-content: start;
   justify-self: end;
   margin-bottom: 0;
   column-row: 6em;
   margin-bottom: 5px;
   text-align: center;
   padding-top: 50px;
-
 }
 
-.player h3{
+.player h3 {
   margin-top: 0.5;
   margin-bottom: 0.6em;
 }
@@ -63,17 +59,17 @@
 }
 
 .reset-button {
-    background-image: linear-gradient(to right, rgb(148, 33, 146), rgb(55, 26, 148));
-    width: 250px;
-    background-color: #00BFFF;
-    margin: 15px 30px;
-    border: none;
-    padding: 13px;
-    color: white;
-    font-size: 1em;
+  background-image: linear-gradient(to right, rgb(148, 33, 146), rgb(55, 26, 148));
+  width: 250px;
+  background-color: #00bfff;
+  margin: 15px 30px;
+  border: none;
+  padding: 13px;
+  color: white;
+  font-size: 1em;
 }
 
-p{
+p {
   margin: 0;
 }
 
@@ -82,10 +78,6 @@ ul {
   padding: 0 2em;
 }
 
-li{
-  text-align: left
+li {
+  text-align: left;
 }
-
-
-
-

@@ -1,6 +1,5 @@
-
-.leaderboard{
-    text-align:center;
+.leaderboard {
+  text-align: center;
 }
 
 .highlight {
@@ -8,15 +7,14 @@
 }
 
 .leaderboard-btn {
-    background-image: linear-gradient(to right, rgb(148, 33, 146), rgb(55, 26, 148));
-    width: 250px;
-    background-color: #00BFFF;
-    margin: 15px 30px;
-    border: none;
-    padding: 13px;
-    color: white;
-    font-size: 1em;
-    
+  background-image: linear-gradient(to right, rgb(148, 33, 146), rgb(55, 26, 148));
+  width: 250px;
+  background-color: #00bfff;
+  margin: 15px 30px;
+  border: none;
+  padding: 13px;
+  color: white;
+  font-size: 1em;
 }
 
 table {
@@ -24,10 +22,10 @@ table {
   border-collapse: collapse;
   width: 80%;
   margin: 0 auto;
-
 }
 
-td, th {
+td,
+th {
   border: 1px solid #dddddd;
   text-align: left;
   padding: 8px;

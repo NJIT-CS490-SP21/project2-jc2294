@@ -32,7 +32,17 @@ export default function Leaderboard({ currentUser }) {
   return (
     <div id="leaderboard" className="leaderboard">
       <div>
-        <button type="submit" className="leaderboard-btn" onClick={() => { onShowHide(); }}> Show LeaderBoard </button>
+        <button
+          type="submit"
+          className="leaderboard-btn"
+          onClick={() => {
+            onShowHide();
+          }}
+        >
+          {' '}
+          Show LeaderBoard
+          {' '}
+        </button>
       </div>
       {isShown === true ? (
         <div className="table">
@@ -47,46 +57,42 @@ export default function Leaderboard({ currentUser }) {
                 <th>Player</th>
                 <th>Score</th>
               </tr>
-              { leaderboard.map((item) => Object.keys(item).map((keys) => ((currentUser === keys)
-                ? (
-                  <tr className="highlight">
-                    <td>
-                      {' '}
-                      {keys}
-                      {' '}
-                    </td>
+              {leaderboard.map((item) => Object.keys(item).map((keys) => (currentUser === keys ? (
+                <tr className="highlight">
+                  <td>
                     {' '}
-                    <td>
-                      {' '}
-                      {item[keys]}
-                      {' '}
-                    </td>
+                    {keys}
                     {' '}
-                  </tr>
-                )
-                : (
-                  <tr>
-                    <td>
-                      {' '}
-                      {keys}
-                      {' '}
-                    </td>
+                  </td>
+                  {' '}
+                  <td>
                     {' '}
-                    <td>
-                      {' '}
-                      {item[keys]}
-                      {' '}
-                    </td>
+                    {item[keys]}
                     {' '}
-                  </tr>
-                )))) }
+                  </td>
+                  {' '}
+                </tr>
+              ) : (
+                <tr>
+                  <td>
+                    {' '}
+                    {keys}
+                    {' '}
+                  </td>
+                  {' '}
+                  <td>
+                    {' '}
+                    {item[keys]}
+                    {' '}
+                  </td>
+                  {' '}
+                </tr>
+              ))))}
             </tbody>
           </table>
         </div>
       ) : null}
-
     </div>
-
   );
 }
 

@@ -14,7 +14,8 @@ export default function Board({ currentUser }) {
   const [message, setMessage] = useState('X will make the first move');
 
   function calculateWinner(boardTic) {
-    const lines = [ // all possible wns
+    const lines = [
+      // all possible wns
       [0, 1, 2],
       [3, 4, 5],
       [6, 7, 8],
@@ -178,40 +179,44 @@ export default function Board({ currentUser }) {
           <div className="player">
             <p>
               Player 1:
-              <span className="name">{ user.X }</span>
+              <span className="name">{user.X}</span>
             </p>
             <h1 className="symbol">X</h1>
           </div>
           <div className="player">
             <p>
               Player 2:
-              <span className="name">{ user.O }</span>
+              <span className="name">{user.O}</span>
             </p>
             <h1 className="symbol">O</h1>
           </div>
           <div className="player">
             <h3>Spectators: </h3>
             <ul>
-              { user.spectators.map((item) => <ListItem name={item} />) }
+              {user.spectators.map((item) => (
+                <ListItem name={item} />
+              ))}
             </ul>
           </div>
         </div>
         <div className="boardAndReset">
-          <p><h3 className="message">{ message }</h3></p>
+          <p>
+            <h3 className="message">{message}</h3>
+          </p>
           <div className="board-css">
-            { board.map((item, jindex) => (
-              <Box
-                onClickHandler={() => onClickHandler(jindex)}
-                item={item}
-              />
-            )) }
+            {board.map((item, jindex) => (
+              <Box onClickHandler={() => onClickHandler(jindex)} item={item} />
+            ))}
           </div>
-          <button type="submit" className="reset-button" onClick={onReset}>Reset</button>
-          <p><h3 className="message">{ status }</h3></p>
+          <button type="submit" className="reset-button" onClick={onReset}>
+            Reset
+          </button>
+          <p>
+            <h3 className="message">{status}</h3>
+          </p>
         </div>
       </div>
     </div>
-
   );
 }
 
