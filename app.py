@@ -143,6 +143,13 @@ def on_click(
     print(str(data))
 
     socketio.emit('click', data, broadcast=True, include_self=False)
+    
+def on_click_test(
+        data):  # data is whatever arg you pass in your emit call on client
+    '''This emits the 'click' event from the server to all clients except for
+    the client that emmitted the event that triggered this function '''
+
+    return data
 
 
 @socketio.on('reset')
