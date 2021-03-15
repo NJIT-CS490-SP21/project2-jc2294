@@ -1,6 +1,6 @@
 '''this test checkes if the username is added to the database '''
 import unittest
-#import unittest.mock as mock
+import unittest.mock as mock
 from unittest.mock import patch
 import os
 import sys
@@ -17,7 +17,6 @@ INITIAL_USERNAME = 'user1'
 
 
 class AddUserTestCase(unittest.TestCase):
-    ''' function to test the add_user function '''
     def setUp(self):
         self.success_test_params = [
             {
@@ -30,19 +29,15 @@ class AddUserTestCase(unittest.TestCase):
         self.initial_db_mock = [initial_person]
 
     def mocked_db_session_add(self, username):
-        '''appends to database'''
         self.initial_db_mock.append(username)
 
     def mocked_db_session_commit(self):
-        '''commits to database'''
-        #pass
+        pass
 
     def mocked_person_query_all(self):
-        '''query all'''
         return self.initial_db_mock
 
     def test_success(self):
-        '''test success case'''
         for test in self.success_test_params:
             with patch('app.db.session.add', self.mocked_db_session_add):
                 with patch('app.db.session.commit',

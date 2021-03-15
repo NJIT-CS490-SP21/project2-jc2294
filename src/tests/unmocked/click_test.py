@@ -1,21 +1,20 @@
 ''' this test will check on click funtion '''
 import unittest
-#import unittest.mock as mock
-#from unittest.mock import patch
+import unittest.mock as mock
+from unittest.mock import patch
 import os
 import sys
 
 # This lets you import from the parent directory (one level up)
 sys.path.append(os.path.abspath('../../../'))
 from app import on_click_test
-#import models
+import models
 
 USERS_INPUT = 'users'
 EXPECTED_OUTPUT = "expected"
 
 
 class ClickTestCase(unittest.TestCase):
-    '''class to test click function '''
     def setUp(self):
         self.success_test_params = [
             {
@@ -38,7 +37,6 @@ class ClickTestCase(unittest.TestCase):
                                      ]
 
     def test_on_click_test(self):
-        ''' function to test on lick '''
         for test in self.success_test_params:
 
             actual_result = on_click_test(test[USERS_INPUT])
@@ -50,8 +48,6 @@ class ClickTestCase(unittest.TestCase):
             self.assertEqual(actual_result, expected_result)
 
     def test_not_on_click_test(self):
-        ''' function to test not on lick '''
-
         for test in self.failure_test_params:
 
             actual_result = on_click_test(test[USERS_INPUT])
@@ -63,8 +59,6 @@ class ClickTestCase(unittest.TestCase):
             self.assertNotEqual(actual_result, expected_result)
 
     def test_not_on_click_test2(self):
-        ''' another function to test not on lick '''
-
         for test in self.failure_test_params2:
 
             actual_result = on_click_test(test[USERS_INPUT])

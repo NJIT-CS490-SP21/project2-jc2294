@@ -13,7 +13,6 @@ USERS_INPUT = 'users'
 EXPECTED_OUTPUT = "expected"
 
 class UpdateUserTestCase(unittest.TestCase):
-    ''' test case for update users '''
     def setUp(self):
         self.success_test_params = [{
             USERS_INPUT: {
@@ -70,7 +69,6 @@ class UpdateUserTestCase(unittest.TestCase):
                                      ]
 
     def test_add_user(self):
-        ''' checks if user is added '''
         for test in self.success_test_params:
 
             actual_result = on_login_test(test[USERS_INPUT])
@@ -82,7 +80,6 @@ class UpdateUserTestCase(unittest.TestCase):
             self.assertEqual(actual_result, expected_result)
 
     def test_not_add_user(self):
-        ''' checks if user is not added '''
         for test in self.failure_test_params:
 
             actual_result = on_login_test(test[USERS_INPUT])
@@ -94,7 +91,6 @@ class UpdateUserTestCase(unittest.TestCase):
             self.assertNotEqual(actual_result, expected_result)
 
     def test_not_add_user2(self):
-        ''' another function that checks if user is not added '''
         for test in self.failure_test_params:
 
             actual_result = on_login_test(test[USERS_INPUT])
