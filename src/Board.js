@@ -198,7 +198,7 @@ export default function Board({ currentUser }) {
         </div>
         <div className="boardAndReset">
           <p><h3 className="message">{ message }</h3></p>
-          <div className="board">
+          <div className="board-css">
             { board.map((item, jindex) => (
               <Box
                 onClickHandler={() => onClickHandler(jindex)}

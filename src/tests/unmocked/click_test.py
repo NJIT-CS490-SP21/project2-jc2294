@@ -33,13 +33,12 @@ class UpdateUserTestCase(unittest.TestCase):
                 USERS_INPUT: 
                     ["X", "X", "O", "O"]
                 ,
-                EXPECTED_OUTPUT:
-                    [],
+                EXPECTED_OUTPUT:[ ],
             },
             # TODO add another test case
         ]
         
-        self.failure_test_params = [
+        self.failure_test_params2 = [
             {
                 USERS_INPUT: 
                     ["X", "X", "O", "O"]
@@ -63,6 +62,16 @@ class UpdateUserTestCase(unittest.TestCase):
             
     def test_not_on_click_test(self):
         for test in self.failure_test_params:
+
+            actual_result = on_click_test(test[USERS_INPUT])
+            
+            # Assign the expected output as a variable from test
+            expected_result = test[EXPECTED_OUTPUT]
+
+            # Use assert checks to see compare values of the results
+            self.assertNotEqual(actual_result, expected_result)
+    def test_not_on_click_test2(self):
+        for test in self.failure_test_params2:
 
             actual_result = on_click_test(test[USERS_INPUT])
             

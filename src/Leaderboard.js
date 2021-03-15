@@ -7,7 +7,7 @@ import './Leaderboard.css';
 const socket = io(); // Connects to socket connection
 
 export default function Leaderboard({ currentUser }) {
-  const [leaderboard, setLeaderboard] = useState(); // leaderboard
+  const [leaderboard, setLeaderboard] = useState([]); // leaderboard
   const [isShown, setShown] = useState(false);
 
   function onShowHide() {
@@ -30,7 +30,7 @@ export default function Leaderboard({ currentUser }) {
   }, []);
 
   return (
-    <div className="leaderboard">
+    <div id="leaderboard" className="leaderboard">
       <div>
         <button type="submit" className="leaderboard-btn" onClick={() => { onShowHide(); }}> Show LeaderBoard </button>
       </div>
