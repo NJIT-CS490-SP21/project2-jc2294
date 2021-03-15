@@ -65,7 +65,8 @@ def add_new_player(current_user):
         new_user = models.Person(username=current_user, score=100)
         db.session.add(new_user)
         db.session.commit()
-        
+
+
 def add_user(current_user):
     ''' helper method to add new player to database '''
     new_user = models.Person(username=current_user, score=100)
@@ -75,8 +76,7 @@ def add_user(current_user):
     all_people = models.Person.query.all()
     for person in all_people:
         players.append(person.username)
-    return players   
-  
+    return players
 
 
 #list of all current users: X, O, and spectators
@@ -105,7 +105,8 @@ def on_login(
     print(players)
     socketio.emit('leaderboard', players, broadcast=True, include_self=False)
     socketio.emit('login', users, broadcast=True, include_self=False)
-    
+
+
 def on_login_test(
         data):  # data is whatever arg you pass in your emit call on client
     ''' This emits the 'click' event from the server to all clients except for
@@ -130,7 +131,7 @@ def update_score(winner, loser):
     db.session.query(
         models.Person).filter(models.Person.username == loser).update(
             {models.Person.score: models.Person.score - 1})
-    db.session.commit() 
+    db.session.commit()
 
 
 @socketio.on('updateScore')
@@ -155,7 +156,8 @@ def on_click(
     print(str(data))
 
     socketio.emit('click', data, broadcast=True, include_self=False)
-    
+
+
 def on_click_test(
         data):  # data is whatever arg you pass in your emit call on client
     '''This emits the 'click' event from the server to all clients except for
